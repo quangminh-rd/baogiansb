@@ -15,7 +15,7 @@ document.getElementById('export-excel').addEventListener('click', async function
         }
 
         // Điền dữ liệu vào các ô trong Excel
-        worksheet.getCell('A3').value = `Số: ${orderDetails.maDonhang || ''}`;
+        worksheet.getCell('A3').value = `Số: ${orderDetails.maHopdong || orderDetails.maDonhang || ''}`;
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban !== "Bán chéo") {
             worksheet.getCell('A4').value = 'Kính gửi:';
             worksheet.getCell('C4').value = orderDetails.tenNguoilienhe || '';
