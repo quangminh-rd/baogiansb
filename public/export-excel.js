@@ -13,9 +13,11 @@ document.getElementById('export-excel').addEventListener('click', async function
             alert('Thông tin đơn hàng chưa được tải.');
             return;
         }
+        const maHienThi = orderDetails.maHopdong && orderDetails.maHopdong.trim() !== ""
+            ? orderDetails.maHopdong
+            : orderDetails.maDonhang;
 
-        // Điền dữ liệu vào các ô trong Excel
-        worksheet.getCell('A3').value = `Số: ${orderDetails.maHopdong || orderDetails.maDonhang || ''}`;
+        worksheet.getCell('A3').value = `Số: ${maHienThi || ''}`;
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban !== "Bán chéo") {
             worksheet.getCell('A4').value = 'Kính gửi:';
             worksheet.getCell('C4').value = orderDetails.tenNguoilienhe || '';
