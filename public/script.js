@@ -537,7 +537,7 @@ function displayConditions() {
     let outputHTML = ""; // Đổi tên biến từ htmlContent thành outputHTML
 
     // Điều kiện cho thuế GTGT
-    if (thueGTGTnpp === 0) {
+    if (thueGTGTnpp === "0") {
         outputHTML += `<p>1. Giá trên chưa bao gồm thuế GTGT.</p>`;
     } else {
         outputHTML += `<p>1. Giá trên đã bao gồm thuế GTGT.</p>`;
