@@ -132,12 +132,6 @@ function formatNumber(numberString) {
     return formatted.replace('.', ',');
 }
 
-function formatWithCommas(numberString) {
-    if (!numberString) return '';
-    const num = numberString.replace(',', '.');
-    return parseFloat(num).toLocaleString('it-IT');
-}
-
 const SPREADSHEET_ID = '14R9efcJ2hGE3mCgmJqi6TNbqkm4GFe91LEAuCyCa4O0';
 const RANGE = 'don_hang!A:BO'; // Mở rộng phạm vi đến cột BO
 const RANGE_CHITIET = 'don_hang_chi_tiet!F:AI'; // Dải dữ liệu từ sheet 'don_hang_chi_tiet'
