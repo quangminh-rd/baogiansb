@@ -21,10 +21,10 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban !== "Bán chéo") {
             worksheet.getCell('A4').value = `Hôm nay, ngày ${orderDetails.ngayPhatHanh || ''} chúng tôi gồm:`;
             worksheet.getCell('A5').value = `Bên yêu cầu cung cứng (bên A): ${orderDetails.tenNguoilienhe || ''}`;
-            worksheet.getCell('H5').value = `Mã khách hàng: `;
+            worksheet.getCell('H5').value = `Mã khách hàng: ${orderDetails.maKhachhang || ''}`;
             worksheet.getCell('A6').value = `Địa chỉ: ${orderDetails.diachiChitiet || ''}`;
             worksheet.getCell('A8').value = `Điện thoại: ${orderDetails.sdtKhachhang || ''}`;
-            worksheet.getCell('A9').value = `Email:  ${orderDetails.emailKhachhang || ''}`;
+            worksheet.getCell('A9').value = `Email:  ${orderDetails.emailKhachHang || ''}`;
             worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
             worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 

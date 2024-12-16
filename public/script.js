@@ -143,15 +143,18 @@ function getDataFromURI() {
 
     // Sử dụng RegEx để trích xuất giá trị của ma_don_hang và QRCODE
     const maDonHangURIMatch = url.match(/ma_don_hang=([^?&]*)/);
+    const maKhachhangURIMatch = url.match(/ma_khach_hang=([^?&]*)/);
     const qrCodeMatch = url.match(/QRCODE=(.*)$/);  // Sử dụng regex để lấy tất cả sau QRCODE=
 
     // Gán các giá trị vào các biến
     const maDonHangURI = maDonHangURIMatch ? decodeURIComponent(maDonHangURIMatch[1]) : null;
+    const maKhachHangURI = maKhachhangURIMatch ? decodeURIComponent(maKhachhangURIMatch[1]) : null;
     const qrCode = qrCodeMatch ? decodeURIComponent(qrCodeMatch[1]) : null;
 
     // Trả về một đối tượng chứa các giá trị
     return {
         maDonHangURI,
+        maKhachHangURI,
         qrCode
     };
 }
@@ -268,6 +271,7 @@ async function findRowInSheet(maDonhangURI) {
                     thueGTGTnpp: row[48] || '', // Cột AW
                     tamUngnpp: row[49] || '', // Cột AX
                     sotienConthieunpp: row[58] || '', // Cột BG
+                    maKhachHang: maKhachHangURI || '',
                 };
 
                 // Xử lý dữ liệu tìm được
