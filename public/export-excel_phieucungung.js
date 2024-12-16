@@ -19,115 +19,41 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
 
         worksheet.getCell('A3').value = `Số: ${maHienThi || ''}`;
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban !== "Bán chéo") {
-            worksheet.getCell('A4').value = 'Kính gửi:';
-            worksheet.getCell('C4').value = orderDetails.tenNguoilienhe || '';
-            worksheet.getCell('H4').value = 'Ngày phát hành:';
-            worksheet.getCell('J4').value = orderDetails.ngayPhatHanh || '';
+            worksheet.getCell('A4').value = `Hôm nay, ngày ${orderDetails.ngayPhatHanh || ''} chúng tôi gồm:`;
+            worksheet.getCell('A5').value = `Bên yêu cầu cung cứng (bên A): ${orderDetails.tenNguoilienhe || ''}`;
+            worksheet.getCell('H5').value = `Mã khách hàng: `;
+            worksheet.getCell('A6').value = `Địa chỉ: ${orderDetails.diachiChitiet || ''}`;
+            worksheet.getCell('A8').value = `Điện thoại: ${orderDetails.sdtKhachhang || ''}`;
+            worksheet.getCell('A9').value = `Email:  ${orderDetails.emailKhachhang || ''}`;
+            worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
+            worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 
-            worksheet.getCell('A5').value = 'Đơn vị:';
-            worksheet.getCell('C5').value = orderDetails.tenTochuc || '';
-            worksheet.getCell('H5').value = 'Đơn vị trực thuộc:';
-            worksheet.getCell('J5').value = orderDetails.donviPhutrach || '';
+            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || ''} đồng.`;
 
-            worksheet.getCell('A6').value = 'Địa chỉ:';
-            worksheet.getCell('C6').value = orderDetails.diachiChitiet || '';
-            worksheet.getCell('H6').value = 'Soạn báo giá:';
-            worksheet.getCell('J6').value = orderDetails.tenNhanvien || '';
-
-            worksheet.getCell('A7').value = 'SĐT:';
-            worksheet.getCell('C7').value = orderDetails.sdtKhachhang || '';
-            worksheet.getCell('H7').value = 'SĐT:';
-            worksheet.getCell('J7').value = orderDetails.sdtNhanvien || '';
-
-            worksheet.getCell('A8').value = 'Email:';
-            worksheet.getCell('C8').value = orderDetails.emailKhachhang || '';
-            worksheet.getCell('H8').value = 'CSKH:';
-            worksheet.getCell('J8').value = '1900 0282';
+            worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
 
         } else if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban === "Bán chéo") {
-            worksheet.getCell('A4').value = 'Kính gửi:';
-            worksheet.getCell('C4').value = orderDetails.tenNguoilienhe || '';
-            worksheet.getCell('H4').value = 'Ngày phát hành:';
-            worksheet.getCell('J4').value = orderDetails.ngayPhatHanh || '';
+            worksheet.getCell('A4').value = `Hôm nay, ngày ${orderDetails.ngayPhatHanh || ''} chúng tôi gồm:`;
+            worksheet.getCell('A5').value = `Bên yêu cầu cung cứng (bên A): ${orderDetails.tenKhachhangcuoi || ''}`;
+            worksheet.getCell('H5').value = `Mã khách hàng: `;
+            worksheet.getCell('A6').value = `Địa chỉ: ${orderDetails.diachiKhachhangcuoi || ''}`;
+            worksheet.getCell('A8').value = `Điện thoại: ${orderDetails.sdtKhachhangcuoi || ''}`;
+            worksheet.getCell('A9').value = `Email:`;
+            worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
+            worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 
-            worksheet.getCell('A5').value = 'Đơn vị:';
-            worksheet.getCell('C5').value = ''; // Không điền đơn vị
-            worksheet.getCell('H5').value = 'Đơn vị trực thuộc:';
-            worksheet.getCell('J5').value = orderDetails.donviPhutrach || '';
-
-            worksheet.getCell('A6').value = 'Địa chỉ:';
-            worksheet.getCell('C6').value = orderDetails.diachiChitiet || '';
-            worksheet.getCell('H6').value = 'Soạn báo giá:';
-            worksheet.getCell('J6').value = orderDetails.tenNhanvien || '';
-
-            worksheet.getCell('A7').value = 'SĐT:';
-            worksheet.getCell('C7').value = orderDetails.sdtKhachhang || '';
-            worksheet.getCell('H7').value = 'SĐT:';
-            worksheet.getCell('J7').value = orderDetails.sdtNhanvien || '';
-
-            worksheet.getCell('A8').value = 'Địa chỉ công trình:';
-            worksheet.getCell('C8').value = `${orderDetails.tenKhachhangcuoi || ''} - ${orderDetails.diachiKhachhangcuoi || ''} - ${orderDetails.sdtKhachhangcuoi || ''}`;
-            worksheet.getCell('H8').value = 'CSKH:';
-            worksheet.getCell('J8').value = '1900 0282';
-
-        } else if (orderDetails.donviPhutrach !== "BP. BH1" && orderDetails.hanGiaohang !== "") {
-            worksheet.getCell('A4').value = 'Kính gửi:';
-            worksheet.getCell('C4').value = ''; // Không điền người nhận
-            worksheet.getCell('H4').value = 'Ngày phát hành:';
-            worksheet.getCell('J4').value = orderDetails.ngayPhatHanh || '';
-
-            worksheet.getCell('A5').value = 'Đơn vị:';
-            worksheet.getCell('C5').value = orderDetails.donviPhutrach || '';
-            worksheet.getCell('H5').value = 'Dự kiến giao:';
-            worksheet.getCell('J5').value = orderDetails.hanGiaohang || '';
-
-            worksheet.getCell('A6').value = 'Địa chỉ:';
-            worksheet.getCell('C6').value = orderDetails.diachi || '';
-            worksheet.getCell('H6').value = 'Soạn báo giá:';
-            worksheet.getCell('J6').value = orderDetails.tenNhanvien || '';
-
-            worksheet.getCell('A7').value = 'SĐT:';
-            worksheet.getCell('C7').value = orderDetails.sdtNhanvien || '';
-
-            worksheet.getCell('A8').value = 'Công trình:';
-            worksheet.getCell('C8').value = `${orderDetails.tenNguoilienhe || ''} - ${orderDetails.diachiChitiet || ''} - ${orderDetails.sdtKhachhang || ''}`;
-            worksheet.getCell('H8').value = 'CSKH:';
-            worksheet.getCell('J8').value = '1900 0282';
-
-        } else if (orderDetails.donviPhutrach !== "BP. BH1" && orderDetails.hanGiaohang === "") {
-            worksheet.getCell('A4').value = 'Kính gửi:';
-            worksheet.getCell('C4').value = ''; // Không điền người nhận
-            worksheet.getCell('H4').value = 'Ngày phát hành:';
-            worksheet.getCell('J4').value = orderDetails.ngayPhatHanh || '';
-
-            worksheet.getCell('A5').value = 'Đơn vị:';
-            worksheet.getCell('C5').value = orderDetails.donviPhutrach || '';
-            worksheet.getCell('H5').value = 'Dự kiến giao:';
-            worksheet.getCell('J5').value = 'Trao đổi với QLSX';
-
-            worksheet.getCell('A6').value = 'Địa chỉ:';
-            worksheet.getCell('C6').value = orderDetails.diachi || '';
-            worksheet.getCell('H6').value = 'Soạn báo giá:';
-            worksheet.getCell('J6').value = orderDetails.tenNhanvien || '';
-
-            worksheet.getCell('A7').value = 'SĐT:';
-            worksheet.getCell('C7').value = orderDetails.sdtNhanvien || '';
-
-            worksheet.getCell('A8').value = 'Công trình:';
-            worksheet.getCell('C8').value = `${orderDetails.tenNguoilienhe || ''} - ${orderDetails.diachiChitiet || ''} - ${orderDetails.sdtKhachhang || ''}`;
-            worksheet.getCell('H8').value = 'CSKH:';
-            worksheet.getCell('J8').value = '1900 0282';
+            worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
         }
-        worksheet.getCell('H512').value = orderDetails.tongSobo ? parseFloat(orderDetails.tongSobo) : 0;
-        worksheet.getCell('L512').value = orderDetails.congnpp ? parseFloat(formatNumber(orderDetails.congnpp)) : 0;
-        worksheet.getCell('H513').value = orderDetails.mucChietkhaunpp ? parseFloat(formatNumber(orderDetails.mucChietkhaunpp)) : 0;
-        worksheet.getCell('L513').value = orderDetails.giatriChietkhaunpp ? parseFloat(formatNumber(orderDetails.giatriChietkhaunpp)) : 0;
-        worksheet.getCell('L514').value = orderDetails.phiVanchuyenlapdatnpp ? parseFloat(formatNumber(orderDetails.phiVanchuyenlapdatnpp)) : 0;
-        worksheet.getCell('H515').value = orderDetails.mucthueGTGTnpp ? parseFloat(formatNumber(orderDetails.mucthueGTGTnpp)) : 0;
-        worksheet.getCell('L515').value = orderDetails.thueGTGTnpp ? parseFloat(formatNumber(orderDetails.thueGTGTnpp)) : 0;
-        worksheet.getCell('L516').value = orderDetails.tamUngnpp ? parseFloat(formatNumber(orderDetails.tamUngnpp)) : 0;
-        worksheet.getCell('L517').value = orderDetails.sotienConthieunpp ? parseFloat(formatNumber(orderDetails.sotienConthieunpp)) : 0;
-        worksheet.getCell('A518').value = `Bằng chữ: ${orderDetails.sotienBangchu || ''}`;
+        worksheet.getCell('H528').value = orderDetails.tongSobo ? parseFloat(orderDetails.tongSobo) : 0;
+        worksheet.getCell('L528').value = orderDetails.congnpp ? parseFloat(formatNumber(orderDetails.congnpp)) : 0;
+        worksheet.getCell('H529').value = orderDetails.mucChietkhaunpp ? parseFloat(formatNumber(orderDetails.mucChietkhaunpp)) : 0;
+        worksheet.getCell('L529').value = orderDetails.giatriChietkhaunpp ? parseFloat(formatNumber(orderDetails.giatriChietkhaunpp)) : 0;
+        worksheet.getCell('L530').value = orderDetails.phiVanchuyenlapdatnpp ? parseFloat(formatNumber(orderDetails.phiVanchuyenlapdatnpp)) : 0;
+        worksheet.getCell('H531').value = orderDetails.mucthueGTGTnpp ? parseFloat(formatNumber(orderDetails.mucthueGTGTnpp)) : 0;
+        worksheet.getCell('L531').value = orderDetails.thueGTGTnpp ? parseFloat(formatNumber(orderDetails.thueGTGTnpp)) : 0;
+        worksheet.getCell('L532').value = orderDetails.tamUngnpp ? parseFloat(formatNumber(orderDetails.tamUngnpp)) : 0;
+        worksheet.getCell('L533').value = orderDetails.sotienConthieunpp ? parseFloat(formatNumber(orderDetails.sotienConthieunpp)) : 0;
+        worksheet.getCell('A534').value = `Bằng chữ: ${orderDetails.sotienBangchu || ''}`;
 
         function formatWithCommas(numberString) {
             if (!numberString) return '';
@@ -137,7 +63,7 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
         }
 
         // Điền chi tiết sản phẩm vào Excel
-        let startRow = 12; // Ví dụ: bắt đầu từ dòng 12
+        let startRow = 28; // Ví dụ: bắt đầu từ dòng 28
         orderItems.forEach((item, index) => {
             const row = worksheet.getRow(startRow + index);
             row.getCell(1).value = parseFloat(formatNumber(item.sttTrongdon));
@@ -153,36 +79,8 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             row.getCell(11).value = parseFloat(formatNumber(item.dongianpp));
             row.getCell(12).value = parseFloat(formatNumber(item.giabannpp));
         });
-        if (worksheet.getCell('L515').value === 0 || worksheet.getCell('L515').value === '') {
-            worksheet.getCell('A519').value = '1. Giá trên chưa bao gồm thuế GTGT.';
-        } else {
-            worksheet.getCell('A519').value = '1. Giá trên đã bao gồm thuế GTGT.';
-        }
 
-        // Điều kiện cho phí vận chuyển và phương thức bán
-        if ((worksheet.getCell('L514').value === 0 || worksheet.getCell('L514').value === '') && orderDetails.phuongThucban !== "Bán lẻ") {
-            worksheet.getCell('A520').value = '2. Giá trên chưa bao gồm phí vận chuyển, lắp đặt.';
-        } else {
-            worksheet.getCell('A520').value = '2. Giá trên đã bao gồm phí vận chuyển, lắp đặt.';
-        }
-
-        // Điều kiện cho đơn vị phụ trách và phương thức bán
-        if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban === "Bán đại lý") {
-            worksheet.getCell('A521').value = '3. Giá trên có hiệu lực 30 ngày kể từ ngày phát hành.';
-            worksheet.getCell('A522').value = '4. Thanh toán 100% tổng giá trị đơn hàng trước khi giao hàng.';
-            worksheet.getCell('A523').value = '5. Giao hàng sau 3 đến 5 ngày làm việc, kể từ ngày chốt đơn.';
-            worksheet.getCell('A524').value = '6. Thời gian bảo hành 12 tháng theo tiêu chuẩn của nhà sản xuất.';
-        } else {
-            worksheet.getCell('A521').value = '3. Giá trên có hiệu lực 30 ngày kể từ ngày phát hành.';
-            worksheet.getCell('A522').value = '4. Tạm ứng 50% tổng giá trị đơn hàng, thanh toán hết số còn lại sau khi nghiệm thu bàn giao.';
-            worksheet.getCell('A523').value = '5. Lắp đặt sau 5 đến 7 ngày làm việc, kể từ ngày nhận được tiền tạm ứng lần 1.';
-            worksheet.getCell('A524').value = '6. Thời gian bảo hành:';
-            worksheet.getCell('A525').value = ' - Bảo hành 2 năm sản phẩm cửa lưới BS-Polyester, cửa rèm vải visor, cửa rèm tổ ong và phụ kiện lắp đồng bộ với cửa: tay nắm kèm khóa, động cơ cuốn, điều khiển, vật tư nhựa.';
-            worksheet.getCell('A526').value = ' - Bảo hành 3 năm sản phẩm cửa lưới sợi thủy tinh, cửa lưới HQ-Polyester, cửa lưới PVC, cửa xếp lưới nhôm, cửa xếp nhựa PC, cửa lưới thép chống cắt.';
-            worksheet.getCell('A527').value = ' - Bảo hành 5 năm sản phẩm cửa sử dụng lưới Inox.';
-        }
-
-        for (let rowNum = 12; rowNum <= 511; rowNum++) {
+        for (let rowNum = 28; rowNum <= 527; rowNum++) {
             const cellValue = worksheet.getCell(`A${rowNum}`).value;
 
             // Kiểm tra nếu ô A[rowNum] không có dữ liệu hoặc là trống
@@ -191,21 +89,21 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             }
         }
 
-        // Kiểm tra và ẩn các dòng từ L513 đến L516 nếu giá trị trong các ô đó là 0 hoặc trống
-        if (worksheet.getCell('L513').value === 0 || worksheet.getCell('L513').value === '') {
-            worksheet.getRow(513).hidden = true; // Ẩn dòng 513
+        // Kiểm tra và ẩn các dòng từ L529 đến L532 nếu giá trị trong các ô đó là 0 hoặc trống
+        if (worksheet.getCell('L529').value === 0 || worksheet.getCell('L529').value === '') {
+            worksheet.getRow(529).hidden = true; // Ẩn dòng 529
         }
 
-        if (worksheet.getCell('L514').value === 0 || worksheet.getCell('L514').value === '') {
-            worksheet.getRow(514).hidden = true; // Ẩn dòng 514
+        if (worksheet.getCell('L530').value === 0 || worksheet.getCell('L530').value === '') {
+            worksheet.getRow(530).hidden = true; // Ẩn dòng 530
         }
 
-        if (worksheet.getCell('L515').value === 0 || worksheet.getCell('L515').value === '') {
-            worksheet.getRow(515).hidden = true; // Ẩn dòng 515
+        if (worksheet.getCell('L531').value === 0 || worksheet.getCell('L531').value === '') {
+            worksheet.getRow(531).hidden = true; // Ẩn dòng 531
         }
 
-        if (worksheet.getCell('L516').value === 0 || worksheet.getCell('L516').value === '') {
-            worksheet.getRow(516).hidden = true; // Ẩn dòng 516
+        if (worksheet.getCell('L532').value === 0 || worksheet.getCell('L532').value === '') {
+            worksheet.getRow(532).hidden = true; // Ẩn dòng 532
         }
 
 
@@ -214,7 +112,7 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
         const blob = new Blob([outputBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `Báo giá số ${orderDetails.maDonhang}.xlsx`;
+        link.download = `Phiếu cung ứng số ${maHienThi}.xlsx`;
 
         link.click();
     } catch (error) {

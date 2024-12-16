@@ -214,7 +214,7 @@ document.getElementById('export-excel_baogia').addEventListener('click', async f
         const blob = new Blob([outputBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `Báo giá số ${orderDetails.maDonhang}.xlsx`;
+        link.download = `Báo giá số ${maHienThi}.xlsx`;
 
         link.click();
     } catch (error) {
