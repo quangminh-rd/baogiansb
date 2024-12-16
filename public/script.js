@@ -267,7 +267,7 @@ async function findRowInSheet(maDonhangURI) {
                     mucthueGTGTnpp: row[47] || '', // Cột AV
                     thueGTGTnpp: row[48] || '', // Cột AW
                     tamUngnpp: row[49] || '', // Cột AX
-                    sotienConthieunpp: row[58] || '', // Cột BG
+                    sotienConthieunpp: row[58] || '', // Cột BG 
                 };
 
                 // Xử lý dữ liệu tìm được
