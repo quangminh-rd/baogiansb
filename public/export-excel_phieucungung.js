@@ -28,7 +28,7 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
             worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 
-            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || ''} đồng.`;
+            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
 
             worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
 
@@ -41,6 +41,8 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             worksheet.getCell('A9').value = `Email:`;
             worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
             worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
+
+            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
 
             worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
         }
