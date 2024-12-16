@@ -13,6 +13,8 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             alert('Thông tin đơn hàng chưa được tải.');
             return;
         }
+        console.log('orderDetails trước khi xuất Excel:', orderDetails);
+
         const maHienThi = orderDetails.maHopdong && orderDetails.maHopdong.trim() !== ""
             ? orderDetails.maHopdong
             : orderDetails.maDonhang;
@@ -21,7 +23,7 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban !== "Bán chéo") {
             worksheet.getCell('A4').value = `Hôm nay, ngày ${orderDetails.ngayPhatHanh || ''} chúng tôi gồm:`;
             worksheet.getCell('A5').value = `Bên yêu cầu cung cứng (bên A): ${orderDetails.tenNguoilienhe || ''}`;
-            worksheet.getCell('H5').value = `Mã khách hàng: ${orderDetails.maKhachhang || ''}`;
+            worksheet.getCell('H5').value = `Mã khách hàng: ${orderDetails.maKhachHang || ''}`;
             worksheet.getCell('A6').value = `Địa chỉ: ${orderDetails.diachiChitiet || ''}`;
             worksheet.getCell('A8').value = `Điện thoại: ${orderDetails.sdtKhachhang || ''}`;
             worksheet.getCell('A9').value = `Email:  ${orderDetails.emailKhachHang || ''}`;
