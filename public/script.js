@@ -274,6 +274,9 @@ async function findRowInSheet(maDonhangURI) {
                     maKhachHang: maKhachHangURI || '',
                 };
 
+                // Log dữ liệu tìm được
+                console.log('Dữ liệu tìm được:', orderDetails);
+
                 // Xử lý dữ liệu tìm được
                 processFoundData(orderDetails);
                 return; // Dừng khi tìm thấy
