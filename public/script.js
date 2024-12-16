@@ -271,11 +271,7 @@ async function findRowInSheet(maDonhangURI) {
                     thueGTGTnpp: row[48] || '', // Cột AW
                     tamUngnpp: row[49] || '', // Cột AX
                     sotienConthieunpp: row[58] || '', // Cột BG
-                    maKhachHang: maKhachHangURI || '',
                 };
-
-                // Log dữ liệu tìm được
-                console.log('Dữ liệu tìm được:', orderDetails);
 
                 // Xử lý dữ liệu tìm được
                 processFoundData(orderDetails);
