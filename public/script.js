@@ -132,7 +132,7 @@ function formatNumber(numberString) {
     return formatted.replace('.', ',');
 }
 
-const SPREADSHEET_ID = '1DlYjHFLUyLc4FubmrI4TK2msG6y0VZXOXZNwRfOm-w0';
+const SPREADSHEET_ID = '14R9efcJ2hGE3mCgmJqi6TNbqkm4GFe91LEAuCyCa4O0';
 const RANGE = 'don_hang!A:BO'; // Mở rộng phạm vi đến cột BO
 const RANGE_CHITIET = 'don_hang_chi_tiet!F:AI'; // Dải dữ liệu từ sheet 'don_hang_chi_tiet'
 const API_KEY = 'AIzaSyA9g2qFUolpsu3_HVHOebdZb0NXnQgXlFM';
