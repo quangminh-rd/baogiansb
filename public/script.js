@@ -605,55 +605,88 @@ async function findDetailsInSheet(maDonhangURI) {
 
 function displayDetailData(filteredRows) {
     const tableBody = document.getElementById('itemTableBody');
-    tableBody.innerHTML = ''; // Xóa dữ liệu cũ nếu có
+    tableBody.innerHTML = ''; // Xóa dữ liệu cũ
 
-    filteredRows.forEach(row => {
-        const item = extractDetailDataFromRow(row);;
+    // Lọc và chuẩn hóa dữ liệu (đã bỏ lọc theo item.hienthi)
+    const items = filteredRows
+        .map(extractDetailDataFromRow)
+        .map(item => ({
+            ...item,
+            standardizedGroup: item.group ? item.group.toLowerCase() : ''
+        }))
+        .sort((a, b) => {
+            if (!a.standardizedGroup && b.standardizedGroup) return 1;
+            if (a.standardizedGroup && !b.standardizedGroup) return -1;
+            return a.standardizedGroup.localeCompare(b.standardizedGroup);
+        });
 
-        // Kiểm tra giá trị của donviPhutrach
-        if (!item.maDonhangCT.includes("1C.029.01")) {
+    // Hàm viết hoa chữ cái đầu mỗi từ
+    function capitalizeWords(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    let currentGroup = '';
+
+    items.forEach(item => {
+        if (item.standardizedGroup !== currentGroup) {
+            currentGroup = item.standardizedGroup;
+
             tableBody.innerHTML += `
-                <tr class="bordered-table">
-                    <td class="borderedcol-1">${item.sttTrongdon || ''}</td>
-                    <td class="borderedcol-2">${item.vitriLapdat || ''}</td>
-                    <td class="borderedcol-3">${item.maSanphamid || ''}</td>
-                    <td class="borderedcol-4">${item.ghiChu ? `${item.diengiai || ''} - ${item.ghiChu}` : item.diengiai || ''}</td>
-                    <td class="borderedcol-5">${item.chieuRong || ''}</td>
-                    <td class="borderedcol-6">${item.chieuCao || ''}</td>
-                    <td class="borderedcol-7">${item.dienTich || ''}</td>
-                    <td class="borderedcol-8">${item.soLuong || ''}</td>
-                    <td class="borderedcol-9">${item.dvt || ''}</td>
-                    <td class="borderedcol-10">${item.khoiLuong || ''}</td>
-                    <td class="borderedcol-11">${item.dongianpp || ''}</td>
-                    <td class="borderedcol-12">${item.giabannpp || ''}</td>
-                </tr>
-            `;
-        } else {
-            tableBody.innerHTML += `
-                <tr class="bordered-table">
-                    <td class="borderedcol-1">${item.sttTrongdon || ''}</td>
-                    <td class="borderedcol-2">${item.vitriLapdat || ''}</td>
-                    <td class="borderedcol-3">${item.maSanphamid || ''}</td>
-                    <td class="borderedcol-4">${item.diengiai || ''}</td>
-                    <td class="borderedcol-5">${item.chieuRong || ''}</td>
-                    <td class="borderedcol-6">${item.chieuCao || ''}</td>
-                    <td class="borderedcol-7">${item.dienTich || ''}</td>
-                    <td class="borderedcol-8">${item.soLuong || ''}</td>
-                    <td class="borderedcol-9">${item.dvt || ''}</td>
-                    <td class="borderedcol-10">${item.khoiLuong || ''}</td>
-                    <td class="borderedcol-11">${item.dongianpp || ''}</td>
-                    <td class="borderedcol-12">${item.giabannpp || ''}</td>
+                <tr class="group-header">
+                    <td colspan="12" style="font-weight: bold; background-color: #f0f0f0;">
+                        Nhóm: ${capitalizeWords(currentGroup)}
+                    </td>
                 </tr>
             `;
         }
+
+        // Xử lý hiển thị kích thước theo đơn vị tính
+        let chieuRongHTML = '', chieuCaoHTML = '', dienTichHTML = '';
+
+        if (item.dvt === 'm2') {
+            chieuRongHTML = `<td class="borderedcol-5">${item.chieuRong || ''}</td>`;
+            chieuCaoHTML = `<td class="borderedcol-6">${item.chieuCao || ''}</td>`;
+            dienTichHTML = `<td class="borderedcol-7">${item.dienTich || ''}</td>`;
+        } else if (item.dvt === 'm') {
+            chieuRongHTML = `<td class="borderedcol-5"></td>`;
+            chieuCaoHTML = `<td class="borderedcol-6">${item.chieuCao || ''}</td>`;
+            dienTichHTML = `<td class="borderedcol-7"></td>`;
+        } else {
+            chieuRongHTML = `<td class="borderedcol-5"></td>`;
+            chieuCaoHTML = `<td class="borderedcol-6"></td>`;
+            dienTichHTML = `<td class="borderedcol-7"></td>`;
+        }
+
+        const diengiaiGhiChu = !item.maDonhangCT.includes("1C.029.01") && item.ghiChu
+            ? `${item.diengiai || ''} - ${item.ghiChu}`
+            : item.diengiai || '';
+
+        tableBody.innerHTML += `
+            <tr class="bordered-table">
+                <td class="borderedcol-1">${item.sttTrongdon || ''}</td>
+                <td class="borderedcol-2">${item.vitriLapdat || ''}</td>
+                <td class="borderedcol-3">${item.maSanphamid || ''}</td>
+                <td class="borderedcol-4">${diengiaiGhiChu}</td>
+                ${chieuRongHTML}
+                ${chieuCaoHTML}
+                ${dienTichHTML}
+                <td class="borderedcol-8">${item.soLuong || ''}</td>
+                <td class="borderedcol-9">${item.dvt || ''}</td>
+                <td class="borderedcol-10">${item.khoiLuong || ''}</td>
+                <td class="borderedcol-11">${item.dongianpp || ''}</td>
+                <td class="borderedcol-12">${item.giabannpp || ''}</td>
+            </tr>
+        `;
     });
 }
+
 
 
 // Trích xuất dữ liệu từ hàng
 function extractDetailDataFromRow(row) {
     return {
         maDonhangCT: row[0],
+        group: row[1],
         sttTrongdon: row[2],
         vitriLapdat: row[4],
         diengiai: row[11],
