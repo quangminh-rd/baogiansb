@@ -643,7 +643,7 @@ function displayDetailData(filteredRows) {
         // Xử lý hiển thị kích thước theo đơn vị tính
         let chieuRongHTML = '', chieuCaoHTML = '', dienTichHTML = '';
 
-        if (item.dvt === 'm2') {
+        if (item.dvt === 'm2' || item.dvt === 'bộ') {
             chieuRongHTML = `<td class="borderedcol-5">${item.chieuRong || ''}</td>`;
             chieuCaoHTML = `<td class="borderedcol-6">${item.chieuCao || ''}</td>`;
             dienTichHTML = `<td class="borderedcol-7">${item.dienTich || ''}</td>`;
