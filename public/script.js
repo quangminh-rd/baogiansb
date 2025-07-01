@@ -132,9 +132,9 @@ function formatNumber(numberString) {
     return formatted.replace('.', ',');
 }
 
-const SPREADSHEET_ID = '14R9efcJ2hGE3mCgmJqi6TNbqkm4GFe91LEAuCyCa4O0';
+const SPREADSHEET_ID = '1DlYjHFLUyLc4FubmrI4TK2msG6y0VZXOXZNwRfOm-w0';
 const RANGE = 'don_hang!A:BO'; // Mở rộng phạm vi đến cột BO
-const RANGE_CHITIET = 'don_hang_chi_tiet!F:AI'; // Dải dữ liệu từ sheet 'don_hang_chi_tiet'
+const RANGE_CHITIET = 'don_hang_chi_tiet!F:GF'; // Dải dữ liệu từ sheet 'don_hang_chi_tiet'
 const API_KEY = 'AIzaSyA9g2qFUolpsu3_HVHOebdZb0NXnQgXlFM';
 
 // Lấy giá trị từ URI sau dấu "?" cho các tham số cụ thể
@@ -328,7 +328,6 @@ function processFoundData(orderDetails) {
     // Ẩn/hiện các dòng theo điều kiện
     toggleRowVisibility('rowChietKhau', orderDetails.giatriChietkhaunpp);
     toggleRowVisibility('rowPhiVanChuyen', orderDetails.phiVanchuyenlapdatnpp);
-    toggleRowVisibility('rowThueGTGT', orderDetails.thueGTGTnpp);
     toggleRowVisibility('rowTamUng', orderDetails.tamUngnpp);
 
     // Hiển thị hoặc ẩn nội dung thanh toán
@@ -539,16 +538,18 @@ function displayConditions() {
 
     // Điều kiện cho thuế GTGT
     if (thueGTGTnpp === "0") {
-        outputHTML += `<p>1. Giá trên chưa bao gồm thuế GTGT.</p>`;
+        outputHTML += `<p>1. Giá trên đã bao gồm thuế GTGT.</p>`;
     } else {
         outputHTML += `<p>1. Giá trên đã bao gồm thuế GTGT.</p>`;
     }
 
     // Điều kiện cho phí vận chuyển và phương thức bán
-    if ((phiVanchuyenlapdatnpp === "" || phiVanchuyenlapdatnpp === "0") && phuongThucban !== "Bán lẻ") {
-        outputHTML += `<p>2. Giá trên chưa bao gồm phí vận chuyển, lắp đặt.</p>`;
-    } else {
+    if ((phiVanchuyenlapdatnpp === "" || phiVanchuyenlapdatnpp === "0") && donviPhutrach === "BP. BH1" && phuongThucban == "Bán lẻ") {
+        outputHTML += `<p>2. Giá trên đã bao gồm phí vận chuyển, lắp đặt tại nội thành Hà Nội.</p>`;
+    } else if (phiVanchuyenlapdatnpp !== '' && phiVanchuyenlapdatnpp !== "0" && donviPhutrach !== "BP. BH1") {
         outputHTML += `<p>2. Giá trên đã bao gồm phí vận chuyển, lắp đặt.</p>`;
+    } else {
+        outputHTML += `<p>2. Giá trên chưa bao gồm phí vận chuyển, lắp đặt.</p>`;
     }
 
     // Điều kiện cho đơn vị phụ trách và phương thức bán
@@ -675,6 +676,7 @@ function displayDetailData(filteredRows) {
                 <td class="borderedcol-10">${item.khoiLuong || ''}</td>
                 <td class="borderedcol-11">${item.dongianpp || ''}</td>
                 <td class="borderedcol-12">${item.giabannpp || ''}</td>
+                <td class="borderedcol-14">${item.mucVAT || ''}</td>
             </tr>
         `;
     });
@@ -700,6 +702,7 @@ function extractDetailDataFromRow(row) {
         khoiLuong: row[18],
         dongianpp: row[25],
         giabannpp: row[26],
+        mucVAT: row[177],
     };
 }
 

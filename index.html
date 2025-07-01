@@ -11,6 +11,7 @@
     <script src="./public/export-excel_baogia.js" defer></script>
     <script src="./public/export-excel_phieucungung.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js"></script>
+
 </head>
 
 <body>
@@ -38,6 +39,7 @@
                 <th class="borderedcol-10" rowspan="2">Khối<br>lượng</th>
                 <th class="borderedcol-11-head" rowspan="2">Đơn giá<br>(VNĐ/ĐVT)</th>
                 <th class="borderedcol-12-head" rowspan="2">Thành tiền<br>(VNĐ)</th>
+                <th class="borderedcol-14-head" rowspan="2">Thuế GTGT<br>(%)</th>
             </tr>
             <tr style="background-color: #78b47ac7; color: black">
                 <th class="borderedcol-5">Rộng<br>(mm)</th>
@@ -48,20 +50,22 @@
                 <!-- Rows will be added dynamically here -->
             </tbody>
             <tr>
-                <th style="text-align: left" colspan="7">Cộng</th>
+                <th style="text-align: left" colspan="7">Tổng thành tiền</th>
                 <th style="text-align: center"><span id="tongSobo"></span></th>
                 <th style="text-align: center"><b>Bộ</b></th>
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="congnpp"></span></th>
+                <th></th>
             </tr>
             <tr id="rowChietKhau">
                 <th style="text-align: left" colspan="7">Chiết khấu</th>
                 <th style="text-align: center"><span id="mucChietkhaunpp"></span></th>
-                <th>%</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="giatriChietkhaunpp"></span></th>
+                <th></th>
             </tr>
             <tr id="rowPhiVanChuyen">
                 <th style="text-align: left" colspan="7">Phí vận chuyển lắp đặt</th>
@@ -70,14 +74,25 @@
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="phiVanchuyenlapdatnpp"></span></th>
+                <th></th>
             </tr>
-            <tr id="rowThueGTGT">
-                <th style="text-align: left" colspan="7">Thuế GTGT</th>
-                <th style="text-align: center"><span id="mucthueGTGTnpp"></span></th>
-                <th>%</th>
+            <tr>
+                <th style="text-align: left" colspan="7">Thuế GTGT 8%</th>
+                <th style="text-align: center"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th style="text-align: right"><span id="mucthueGTGTnpp"></span></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th style="text-align: left" colspan="7">Thuế GTGT 10%</th>
+                <th style="text-align: center"></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="thueGTGTnpp"></span></th>
+                <th></th>
             </tr>
             <tr id="rowTamUng">
                 <th style="text-align: left" colspan="7">Tạm ứng</th>
@@ -86,6 +101,7 @@
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="tamUngnpp"></span></th>
+                <th></th>
             </tr>
             <tr>
                 <th style="text-align: left" colspan="7">Số tiền còn phải thanh toán</th>
@@ -94,9 +110,10 @@
                 <th></th>
                 <th></th>
                 <th style="text-align: right"><span id="sotienConthieunpp"></span></th>
+                <th></th>
             </tr>
             <tr>
-                <th style="text-align: left" colspan="12">Bằng chữ: <span id="sotienBangchu"></span></th>
+                <th style="text-align: left" colspan="13">Bằng chữ: <span id="sotienBangchu"></span></th>
             </tr>
         </table>
         <p><b>Ghi chú:</b></p>
