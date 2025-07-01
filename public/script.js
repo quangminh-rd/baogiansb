@@ -159,6 +159,7 @@ function getDataFromURI() {
     };
 }
 
+
 // Hàm để tải Google API Client
 function loadGapiAndInitialize() {
     const script = document.createElement('script');
