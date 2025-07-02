@@ -663,6 +663,15 @@ function displayDetailData(filteredRows) {
             ? `${item.diengiai || ''} - ${item.ghiChu}`
             : item.diengiai || '';
 
+
+        let mucVAThtml = '';
+
+        if (item.maDonhangCT?.includes('1C.') || item.maDonhangCT?.includes('1B.') || item.maDonhangCT?.includes('2B.')) {
+            mucVAThtml = `<td class="borderedcol-14">${item.mucVAT || ''}</td>`;
+        } else {
+            mucVAThtml = `<td class="borderedcol-14"></td>`;
+        }
+
         tableBody.innerHTML += `
             <tr class="bordered-table">
                 <td class="borderedcol-1">${item.sttTrongdon || ''}</td>
@@ -677,7 +686,7 @@ function displayDetailData(filteredRows) {
                 <td class="borderedcol-10">${item.khoiLuong || ''}</td>
                 <td class="borderedcol-11">${item.dongianpp || ''}</td>
                 <td class="borderedcol-12">${item.giabannpp || ''}</td>
-                <td class="borderedcol-14">${item.mucVAT || ''}</td>
+                ${mucVAThtml}
             </tr>
         `;
     });
