@@ -565,7 +565,7 @@ function displayConditions() {
         outputHTML += `
                                 <p>3. Giá trên có hiệu lực 30 ngày kể từ ngày phát hành.</p>
                                 <p>4. Tạm ứng 50% tổng giá trị đơn hàng, thanh toán hết số còn lại sau khi nghiệm thu bàn giao.</p>
-                                <p>5. Lắp đặt sau 3 đến 5 ngày làm việc.</p>
+                                <p>5. Giao hàng sau 3 đến 5 ngày làm việc.</p>
                                 <p>6. Thời gian bảo hành:</p>
                                 <p style="padding-left: 20px;"> - Bảo hành 2 năm phụ kiện lắp đồng bộ với cửa, tay nắm, bánh xe, ổ khóa, động cơ, điều khiển, phụ kiện nhựa, …</p>
                                 <p style="padding-left: 20px;"> - Bảo hành 2 năm sản phẩm Cửa xếp rèm tổ ong; Cửa xếp 2 trong 1/ xếp xích 2 trong 1 kết hợp lưới và rèm.</p>
