@@ -170,6 +170,7 @@ document.getElementById('export-excel_baogia').addEventListener('click', async f
             worksheet.getCell('A521').value = '2. Giá trên chưa bao gồm phí vận chuyển, lắp đặt.';
         }
 
+
         // Điều kiện cho đơn vị phụ trách và phương thức bán
         if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban === "Bán đại lý") {
             worksheet.getCell('A522').value = '3. Giá trên có hiệu lực 30 ngày kể từ ngày phát hành.';
