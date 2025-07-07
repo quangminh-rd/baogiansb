@@ -539,7 +539,7 @@ function displayConditions() {
 
     // Điều kiện cho thuế GTGT
     if (donviPhutrach !== "BP. BH1") {
-        outputHTML += `<p>1. Giá trên chưa bao gồm thuế GTGT.</p>`;
+        outputHTML += `<p>1. Giá trên đã bao gồm thuế GTGT.</p>`;
     } else {
         outputHTML += `<p>1. Giá trên đã bao gồm thuế GTGT.</p>`;
     }
