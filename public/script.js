@@ -329,6 +329,8 @@ function processFoundData(orderDetails) {
     // Ẩn/hiện các dòng theo điều kiện
     toggleRowVisibility('rowChietKhau', orderDetails.giatriChietkhaunpp);
     toggleRowVisibility('rowPhiVanChuyen', orderDetails.phiVanchuyenlapdatnpp);
+    toggleRowVisibility('rowMucThueGTGTNPP', orderDetails.mucthueGTGTnpp);
+    toggleRowVisibility('rowThueGTGTNPP', orderDetails.thueGTGTnpp);
     toggleRowVisibility('rowTamUng', orderDetails.tamUngnpp);
 
     // Hiển thị hoặc ẩn nội dung thanh toán
