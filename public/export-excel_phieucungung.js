@@ -30,9 +30,9 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
             worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 
-            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
+            worksheet.getCell('A539').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
 
-            worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
+            worksheet.getCell('J580').value = `${orderDetails.tenNhanvien || ''}`;
 
         } else if (orderDetails.donviPhutrach === "BP. BH1" && orderDetails.phuongThucban === "Bán chéo") {
             worksheet.getCell('A4').value = `Hôm nay, ngày ${orderDetails.ngayPhatHanh || ''} chúng tôi gồm:`;
@@ -44,20 +44,20 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
             worksheet.getCell('A18').value = `Đại diện (Ông/Bà): ${orderDetails.tenNhanvien || ''}`;
             worksheet.getCell('A20').value = `Điện thoại: ${orderDetails.sdtNhanvien || ''}`;
 
-            worksheet.getCell('A538').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
+            worksheet.getCell('A539').value = `- Lần 1: Bên A tạm ứng bên B: ${orderDetails.tamUngnpp || '0'} đồng.`;
 
-            worksheet.getCell('J579').value = `${orderDetails.tenNhanvien || ''}`;
+            worksheet.getCell('J580').value = `${orderDetails.tenNhanvien || ''}`;
         }
         worksheet.getCell('H528').value = orderDetails.tongSobo ? parseFloat(orderDetails.tongSobo) : 0;
         worksheet.getCell('L528').value = orderDetails.congnpp ? parseFloat(formatNumber(orderDetails.congnpp)) : 0;
         worksheet.getCell('H529').value = orderDetails.mucChietkhaunpp ? parseFloat(formatNumber(orderDetails.mucChietkhaunpp)) : 0;
         worksheet.getCell('L529').value = orderDetails.giatriChietkhaunpp ? parseFloat(formatNumber(orderDetails.giatriChietkhaunpp)) : 0;
         worksheet.getCell('L530').value = orderDetails.phiVanchuyenlapdatnpp ? parseFloat(formatNumber(orderDetails.phiVanchuyenlapdatnpp)) : 0;
-        worksheet.getCell('H531').value = orderDetails.mucthueGTGTnpp ? parseFloat(formatNumber(orderDetails.mucthueGTGTnpp)) : 0;
-        worksheet.getCell('L531').value = orderDetails.thueGTGTnpp ? parseFloat(formatNumber(orderDetails.thueGTGTnpp)) : 0;
-        worksheet.getCell('L532').value = orderDetails.tamUngnpp ? parseFloat(formatNumber(orderDetails.tamUngnpp)) : 0;
-        worksheet.getCell('L533').value = orderDetails.sotienConthieunpp ? parseFloat(formatNumber(orderDetails.sotienConthieunpp)) : 0;
-        worksheet.getCell('A534').value = `Bằng chữ: ${orderDetails.sotienBangchu || ''}`;
+        worksheet.getCell('L531').value = orderDetails.mucthueGTGTnpp ? parseFloat(formatNumber(orderDetails.mucthueGTGTnpp)) : 0;
+        worksheet.getCell('L532').value = orderDetails.thueGTGTnpp ? parseFloat(formatNumber(orderDetails.thueGTGTnpp)) : 0;
+        worksheet.getCell('L533').value = orderDetails.tamUngnpp ? parseFloat(formatNumber(orderDetails.tamUngnpp)) : 0;
+        worksheet.getCell('L534').value = orderDetails.sotienConthieunpp ? parseFloat(formatNumber(orderDetails.sotienConthieunpp)) : 0;
+        worksheet.getCell('A535').value = `Bằng chữ: ${orderDetails.sotienBangchu || ''}`;
 
         function formatWithCommas(numberString) {
             if (!numberString) return '';
@@ -108,6 +108,10 @@ document.getElementById('export-excel_phieucungung').addEventListener('click', a
 
         if (worksheet.getCell('L532').value === 0 || worksheet.getCell('L532').value === '') {
             worksheet.getRow(532).hidden = true; // Ẩn dòng 532
+        }
+
+        if (worksheet.getCell('L533').value === 0 || worksheet.getCell('L533').value === '') {
+            worksheet.getRow(533).hidden = true; // Ẩn dòng 533
         }
 
 
