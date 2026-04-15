@@ -628,9 +628,19 @@ function displayDetailData(filteredRows) {
             standardizedGroup: item.group ? item.group.toLowerCase() : ''
         }))
         .sort((a, b) => {
-            if (!a.standardizedGroup && b.standardizedGroup) return 1;
-            if (a.standardizedGroup && !b.standardizedGroup) return -1;
-            return a.standardizedGroup.localeCompare(b.standardizedGroup);
+            const groupA = (a.standardizedGroup || '').toLowerCase();
+            const groupB = (b.standardizedGroup || '').toLowerCase();
+
+            // 1. Sắp xếp theo group trước
+            if (groupA !== groupB) {
+                return groupA.localeCompare(groupB);
+            }
+
+            // 2. Trong cùng group thì sắp theo STT
+            const sttA = parseInt(String(a.sttTrongdon || '').replace(/\D/g, ''), 10) || 0;
+            const sttB = parseInt(String(b.sttTrongdon || '').replace(/\D/g, ''), 10) || 0;
+
+            return sttA - sttB;
         });
 
     // Hàm viết hoa chữ cái đầu mỗi từ
