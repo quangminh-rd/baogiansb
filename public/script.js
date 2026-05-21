@@ -650,6 +650,10 @@ function displayDetailData(filteredRows) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
+    function nl2br(text) {
+        return String(text || '').replace(/\r\n|\r|\n/g, '<br>');
+    }
+
     let currentGroup = '';
 
     items.forEach(item => {
@@ -682,9 +686,11 @@ function displayDetailData(filteredRows) {
             dienTichHTML = `<td class="borderedcol-7"></td>`;
         }
 
-        const diengiaiGhiChu = !item.maDonhangCT.includes("1C.029.01") && item.ghiChu
+        let diengiaiGhiChu = !item.maDonhangCT.includes("1C.029.01") && item.ghiChu
             ? `${item.diengiai || ''} - ${item.ghiChu}`
             : item.diengiai || '';
+
+        diengiaiGhiChu = nl2br(diengiaiGhiChu);
 
 
         let mucVAThtml = '';
