@@ -1,1189 +1,616 @@
-< !DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Thông tin bảo hành</title><link rel="stylesheet" href="./public/style.css"><script src="./public/script.js" defer></script><script src="./public/export-pdf.js" defer></script><script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js"></script><style>@page {
-    size: A4;
-    margin: 12mm;
-}
-
-:root {
-    --bg: #eef2ff;
-    --bg-2: #f8fafc;
-    --card: rgba(255, 255, 255, 0.88);
-    --card-strong: rgba(255, 255, 255, 0.98);
-    --line: rgba(148, 163, 184, 0.22);
-    --line-strong: rgba(100, 116, 139, 0.30);
-    --text: #0f172a;
-    --muted: #64748b;
-    --accent: #0f4c81;
-    --accent-2: #2563eb;
-    --accent-3: #1d4ed8;
-    --soft: #eff6ff;
-    --soft-2: #f8fbff;
-    --shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
-    --shadow-soft: 0 10px 28px rgba(15, 23, 42, 0.06);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34%),
-        radial-gradient(circle at top right, rgba(15, 76, 129, 0.14), transparent 30%),
-        linear-gradient(180deg, #f6f8ff 0%, #edf2f7 100%);
-    padding: 24px;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.32) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.02));
-    opacity: 0.22;
-}
-
-.page-shell {
-    width: 100%;
-    max-width: 1180px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-
-.content {
-    padding: 22px;
-    background: var(--card);
-    border: 1px solid rgba(226, 232, 240, 0.92);
-    box-shadow: var(--shadow);
-    border-radius: 28px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-}
-
-.hero {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 18px;
-    align-items: center;
-    padding: 18px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(15, 76, 129, 0.10), rgba(37, 99, 235, 0.06)), rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(191, 219, 254, 0.55);
-    box-shadow: var(--shadow-soft);
-}
-
-.brand-mark {
-    width: 112px;
-    height: 112px;
-    border-radius: 24px;
-    padding: 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.88));
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-    overflow: hidden;
-}
-
-.brand-mark img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.hero-copy {
-    min-width: 0;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 12px;
-    border-radius: 999px;
-    background: rgba(15, 76, 129, 0.10);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.35px;
-    text-transform: uppercase;
-}
-
-h2 {
-    margin: 10px 0 6px;
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1.1;
-    letter-spacing: 0.3px;
-    color: var(--text);
-}
-
-.subline {
-    margin: 0;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.55;
-    max-width: 780px;
-}
-
-.hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.meta-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(191, 219, 254, 0.85);
-    color: var(--accent);
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-weight: 700;
-    white-space: nowrap;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-}
-
-.grid-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.section-card {
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.98));
-    overflow: hidden;
-    box-shadow: var(--shadow-soft);
-}
-
-.section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 18px;
-    background: linear-gradient(90deg, rgba(15, 76, 129, 0.10), rgba(37, 99, 235, 0.04));
-    border-bottom: 1px solid rgba(191, 219, 254, 0.62);
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.45px;
-}
-
-.section-head .section-note {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.info-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-.info-table td {
-    border-bottom: 1px solid var(--line);
-    padding: 12px 18px;
-    vertical-align: top;
-    font-size: 13px;
-    line-height: 1.45;
-}
-
-.info-table tr:last-child td {
-    border-bottom: none;
-}
-
-.info-label {
-    width: 24%;
-    color: var(--muted);
-    font-weight: 600;
-    background: rgba(248, 250, 252, 0.8);
-}
-
-.info-sep {
-    width: 2%;
-    color: #94a3b8;
-    background: rgba(248, 250, 252, 0.8);
-}
-
-.info-value {
-    width: 74%;
-    font-weight: 700;
-    color: var(--text);
-    word-break: break-word;
-    background: #fff;
-}
-
-.table-wrap {
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: var(--shadow-soft);
-}
-
-.table-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.9);
-    background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(255, 255, 255, 0.98));
-}
-
-.table-toolbar .title {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.table-toolbar .title strong {
-    font-size: 15px;
-    color: var(--text);
-}
-
-.table-toolbar .title span {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.table-toolbar .chip {
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: var(--soft);
-    border: 1px solid rgba(191, 219, 254, 0.82);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 800;
-    white-space: nowrap;
-}
-
-.bordered-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    font-size: 12.5px;
-}
-
-.bordered-table thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, #1f4b7b, #0f4c81);
-    color: #fff;
-    font-weight: 800;
-    text-align: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 12px 8px;
-    vertical-align: middle;
-}
-
-.bordered-table thead th:last-child {
-    border-right: none;
-}
-
-.bordered-table tbody td {
-    border-top: 1px solid var(--line);
-    border-right: 1px solid var(--line);
-    padding: 12px 10px;
-    vertical-align: top;
-    word-wrap: break-word;
-    overflow-wrap: anywhere;
-    background: #fff;
-}
-
-.bordered-table tbody tr:nth-child(even) td {
-    background: #fbfdff;
-}
-
-.bordered-table tbody tr:hover td {
-    background: #f7fbff;
-}
-
-.bordered-table tbody td:last-child {
-    border-right: none;
-}
-
-.cell-center {
-    text-align: center;
-}
-
-.cell-right {
-    text-align: right;
-}
-
-.product-code {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: rgba(37, 99, 235, 0.08);
-    border: 1px solid rgba(96, 165, 250, 0.28);
-    color: var(--accent);
-    font-weight: 800;
-    word-break: break-word;
-}
-
-.product-desc {
-    color: var(--text);
-    line-height: 1.55;
-}
-
-.warranty-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-width: 82px;
-    padding: 9px 14px;
-    border: 1px solid rgba(191, 219, 254, 0.92);
-    border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff 0%, #f1f7ff 100%);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 8px 16px rgba(15, 23, 42, 0.05);
-    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
-}
-
-.warranty-toggle:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.09);
-    filter: brightness(0.99);
-}
-
-.warranty-toggle:active {
-    transform: translateY(0);
-}
-
-.warranty-detail-row td {
-    padding: 0;
-    border-top: none;
-    background: #f8fbff;
-}
-
-.warranty-detail-cell {
-    padding: 0 !important;
-    background: #f8fbff !important;
-}
-
-.warranty-panel {
-    border-top: 1px solid #e1ebf8;
-    background: linear-gradient(180deg, #f8fbff, #f2f7ff);
-    padding: 16px 18px 18px;
-}
-
-.warranty-panel-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding: 10px 12px;
-    border: 1px solid #dce7f5;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #f5f9ff 0%, #eef5ff 100%);
-}
-
-.warranty-panel-title {
-    font-size: 12px;
-    font-weight: 900;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.35px;
-}
-
-.warranty-panel table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px;
-    background: #fff;
-    border: 1px solid #dce7f5;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
-}
-
-.warranty-panel thead th {
-    background: #edf4ff;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    font-size: 10px;
-    font-weight: 900;
-    text-align: left;
-    padding: 9px 10px;
-    border-bottom: 1px solid #dbe7f7;
-}
-
-.warranty-panel tbody td {
-    padding: 10px 10px;
-    border-bottom: 1px solid #edf2f8;
-    vertical-align: top;
-    background: transparent;
-}
-
-.warranty-panel tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.warranty-criterion {
-    font-weight: 700;
-    color: var(--text);
-    display: block;
-    line-height: 1.4;
-}
-
-.warranty-date {
-    display: block;
-    color: var(--accent);
-    font-weight: 900;
-    line-height: 1.25;
-}
-
-.warranty-remaining {
-    display: block;
-    margin-top: 2px;
-    color: var(--muted);
-    line-height: 1.25;
-}
-
-.summary-row td {
-    background: linear-gradient(180deg, #f4f8ff, #edf4ff) !important;
-    font-weight: 800;
-}
-
-.summary-row td:first-child {
-    color: var(--accent);
-}
-
-.status-box {
-    margin-top: 14px;
-    padding: 16px 18px;
-    border-radius: 16px;
-    background: #f8fbff;
-    border: 1px dashed #bfd0ea;
-    color: var(--muted);
-    text-align: center;
-}
-
-.button-pdf {
-    margin-top: 16px;
-    width: 100%;
-    padding: 12px 16px;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #2563eb, #0f4c81);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    cursor: pointer;
-    box-shadow: 0 12px 22px rgba(15, 76, 129, 0.18);
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
-}
-
-.button-pdf:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 26px rgba(15, 76, 129, 0.22);
-}
-
-.button-pdf:active {
-    transform: translateY(0);
-}
-
-@media print {
-    body {
-        background: #fff;
-        padding: 0;
-    }
-
-    body::before {
-        display: none;
-    }
-
-    .page-shell {
-        max-width: none;
-    }
-
-    .content {
-        box-shadow: none;
-        border-radius: 0;
-        border: none;
-        padding: 0;
-    }
-
-    .button-pdf,
-    .warranty-toggle {
-        display: none !important;
-    }
-
-    .bordered-table thead th {
-        position: static;
-    }
-}
-
-@media screen and (max-width: 900px) {
-    body {
-        padding: 12px;
-    }
-
-    .content {
-        padding: 14px;
-        border-radius: 22px;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        justify-items: center;
-    }
-
-    .hero-copy {
-        text-align: center;
-    }
-
-    .hero-meta {
-        justify-content: center;
-    }
-
-    .info-table td {
-        padding: 10px 12px;
-    }
-
-    .info-label {
-        width: 34%;
-    }
-
-    .info-value {
-        width: 64%;
-    }
-
-    .bordered-table thead th,
-    .bordered-table tbody td {
-        padding: 10px 8px;
-    }
-
-    .table-toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .hero {
-        padding: 14px;
-    }
-
-    .brand-mark {
-        width: 88px;
-        height: 88px;
-        border-radius: 20px;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-
-    .subline,
-    .info-table td,
-    .bordered-table {
-        font-size: 11px;
-    }
-
-    .info-table,
-    .info-table tbody,
-    .info-table tr,
-    .info-table td {
-        display: block;
-        width: 100%;
-    }
-
-    .info-table tr {
-        border-bottom: 1px solid var(--line);
-    }
-
-    .info-table tr:last-child {
-        border-bottom: none;
-    }
-
-    .info-table td {
-        border-bottom: none;
-    }
-
-    .info-label,
-    .info-sep,
-    .info-value {
-        width: 100%;
-        display: block;
-    }
-
-    .info-label {
-        padding-bottom: 4px;
-        background: transparent;
-    }
-
-    .info-sep {
-        display: none;
-    }
-
-    .info-value {
-        padding-top: 0;
-    }
-
-    .bordered-table thead th,
-    .bordered-table tbody td {
-        padding: 8px 6px;
-    }
-
-    .table-toolbar {
-        padding: 12px 14px;
-    }
-
-    .table-toolbar .title strong {
-        font-size: 14px;
-    }
-}
-
-</style></head><body><div class="page-shell"><div class="content" id="content"><div class="hero"><div class="brand-mark"><img src="https://i.imgur.com/BrJoeOv.png" alt="Logo"></div><div class="hero-copy"><div class="eyebrow">Thông tin bảo hành</div><h2>TRA CỨU BẢO HÀNH</h2><p class="subline">Giao diện được làm mới theo hướng hiện đại,
-gọn gàng và dễ đọc hơn,
-tối ưu cho cả máy tính lẫn in PDF.</p><div class="hero-meta"><span class="meta-pill">Mã đơn hàng: <span id="heroMaDonHang">Đang tải...</span></span><span class="meta-pill">Mã hợp đồng: <span id="heroMaHopDong">Đang tải...</span></span><span class="meta-pill">Ngày bàn giao: <span id="heroNgayBanGiao">Đang tải...</span></span></div></div></div><div class="grid-layout"><div class="section-card"><div class="section-head"><span>Thông tin đơn hàng</span><span class="section-note">Dữ liệu khách hàng và hợp đồng</span></div><table class="info-table"><tbody><tr><td class="info-label"><i>Tên người liên hệ</i></td><td class="info-sep"><i>:</i></td><td class="info-value"><i><span id="tenNguoiLienHe">Đang tải...</span></i></td></tr><tr><td class="info-label"><i>Số điện thoại</i></td><td class="info-sep"><i>:</i></td><td class="info-value"><i><span id="sdtKhachHang">Đang tải...</span></i></td></tr><tr><td class="info-label"><i>Địa chỉ chi tiết</i></td><td class="info-sep"><i>:</i></td><td class="info-value"><i><span id="diaChiChiTiet">Đang tải...</span></i></td></tr><tr><td class="info-label"><i>Mã hợp đồng</i></td><td class="info-sep"><i>:</i></td><td class="info-value"><i><span id="maHopDong">Đang tải...</span></i></td></tr><tr><td class="info-label"><i>Ngày bàn giao</i></td><td class="info-sep"><i>:</i></td><td class="info-value"><i><span id="ngayBanGiao">Đang tải...</span></i></td></tr></tbody></table></div><div class="table-wrap"><div class="table-toolbar"><div class="title"><strong>Danh sách sản phẩm bảo hành</strong><span>Hiển thị chi tiết sản phẩm,
-kích thước và thời hạn bảo hành</span></div><div class="chip">Bảo hành theo từng sản phẩm</div></div><table class="bordered-table"><thead><tr><th style="width: 4%;">STT</th><th style="width: 12%;">Mã SP</th><th style="width: 26%;">Diễn giải</th><th style="width: 8%;">Rộng</th><th style="width: 8%;">Cao</th><th style="width: 7%;">Số lượng</th><th style="width: 11%;">Ngày bàn giao</th><th style="width: 8%;">BH</th></tr></thead><tbody id="itemTableBody">< !-- Rows will be added dynamically here --></tbody></table></div></div></div><button id="export-pdf" class="button-pdf">Tải PDF</button></div><script>const SPREADSHEET_ID='1BrEXyW5M9Sild-C0qFHmGxYaXq8Jfown0LiykKMTuhA';
-const RANGE_MAIN='du_lieu_bao_hanh!A:F';
-const RANGE_DETAIL='du_lieu_bao_hanh_chi_tiet!A:G';
-const RANGE_RULE='quy_dinh_bh_hdsd_hdld!A:Z';
-const API_KEY='AIzaSyA9g2qFUolpsu3_HVHOebdZb0NXnQgXlFM';
-
-let warrantyMain=null;
-let warrantyItems=[];
-let warrantyRules=[];
-
-function getDataFromURI() {
-    const url=window.location.href;
-    const idURIMatch=url.match(/[?&]id=([^&#]*)/);
-    const idURI=idURIMatch ? decodeURIComponent(idURIMatch[1]): '';
-
-    return {
-        idURI
-    }
-
-    ;
-}
-
-function updateContent(message) {
-    const contentElement=document.getElementById('content');
-
-    if (contentElement) {
-        contentElement.innerHTML=`<div class="status-box">$ {
-            message
+        @page {
+            size: A4;
+            margin: 20mm;
         }
 
-        </div>`;
-    }
-}
-
-function escapeHtml(value) {
-    return String(value ?? '') .replace(/&/g, '&amp;') .replace(/</g, '&lt;') .replace(/>/g, '&gt;') .replace(/"/g, '&quot;')
- .replace(/'/g, ' &#39; ');
-
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            background: url('https://i.imgur.com/BrJoeOv.png') no-repeat center center;
+            background-size: 210mm auto;
+            opacity: 0.99;
         }
 
-        function normalizeDate(value) {
-            if ( !value) return null;
-            if (value instanceof Date && !isNaN(value)) return value;
-
-            const s=String(value).trim();
-
-            let m=s.match(/^(\d {
-                        4
-
-                    })[-/](\d {
-                        1, 2
-
-                    })[-/](\d {
-                        1, 2
-                    })$/);
-            if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
-
-            m=s.match(/^(\d {
-                        1, 2
-
-                    })[-/](\d {
-                        1, 2
-
-                    })[-/](\d {
-                        4
-                    })$/);
-            if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
-
-            const parsed=new Date(s);
-            return isNaN(parsed) ? null : parsed;
+        .content {
+            width: 100%;
+            max-width: 210mm;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
         }
 
-        function formatDateDisplay(dateString) {
-            if ( !dateString) return '';
-            const date=normalizeDate(dateString);
-            if ( !date) return String(dateString);
-
-            return `$ {
-                String(date.getDate()).padStart(2, '0')
-            }
-
-            /$ {
-                String(date.getMonth() + 1).padStart(2, '0')
-            }
-
-            /$ {
-                date.getFullYear()
-            }
-
-            `;
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 6px;
         }
 
-        function parseNumberFromSheet(value) {
-            if (value==='' || value===null || value===undefined) return '';
-            if (typeof value==='number') return value;
-            const normalized=String(value).replace(/\./g, '').replace(',', '.');
-            const num=parseFloat(normalized);
-            return isNaN(num) ? '' : num;
+        h3 {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
-        function formatNumberForDisplay(number) {
-            if (number==='' || number===null || number===undefined) return '';
-            return String(number).replace('.', ',');
+        p {
+            margin: 5px 0;
+            font-size: 14px;
         }
 
-        function normalizeKey(value) {
-            return String(value || '') .trim() .toLowerCase() .replace(/\s+/g, '_') .replace(/[^a-z0-9_]/g, '_') .replace(/_+/g, '_') .replace(/^_|_$/g, '');
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 20px;
         }
 
-        function rowToObject(headers, row) {
-            const obj= {}
-
-            ;
-
-            headers.forEach((header, index)=> {
-                    obj[header]=row[index] ?? '';
-                });
-            return obj;
+        .info-table {
+            size: A4;
+            width: 100%;
+            max-width: 210mm;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+            font-size: 14px;
         }
 
-        function getValue(obj, ...keys) {
-            for (const key of keys) {
-                const normalized=normalizeKey(key);
-
-                if (Object.prototype.hasOwnProperty.call(obj, normalized)) {
-                    return obj[normalized];
-                }
-            }
-
-            return '';
+        .bordered-table {
+            size: A4;
+            width: 100%;
+            max-width: 210mm;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+            font-size: 12px;
         }
 
-        function addMonths(date, months) {
-            const result=new Date(date.getTime());
-            const desiredDay=result.getDate();
-            result.setMonth(result.getMonth() + months);
-
-            if (result.getDate() < desiredDay) {
-                result.setDate(0);
-            }
-
-            return result;
+        .info-table th,
+        .info-table td,
+        .bordered-table th,
+        .bordered-table td {
+            border: 1px solid black;
+            padding: 5px;
+            word-wrap: break-word;
+            page-break-inside: avoid;
         }
 
-        function daysBetween(startDate, endDate) {
-            return Math.ceil((endDate.getTime() - startDate.getTime()) / 86400000);
+        .infocol-1 {
+            width: 12%;
         }
 
-        function loadGapiAndInitialize() {
-            const script=document.createElement('script');
-            script.src='https://apis.google.com/js/api.js';
-            script.onload=initialize;
-            script.onerror=()=> console.error('Failed to load Google API Client.');
-            document.body.appendChild(script);
+        .infocol-2 {
+            width: 50%;
         }
 
-        function initialize() {
-            gapi.load('client', async ()=> {
-                    try {
-                        await gapi.client.init({
-                            apiKey: API_KEY,
-                            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
-                        });
-
-                    const {
-                        idURI
-                    }
-
-                    =getDataFromURI();
-
-                    if ( !idURI) {
-                        updateContent('Thiếu tham số <b>id</b> trên URL.');
-                        return;
-                    }
-
-                    await findMainInfo(idURI);
-                    await loadWarrantyRules();
-                    await findDetailInfo(idURI);
-                }
-
-                catch (error) {
-                    updateContent('Initialization error: ' + error.message);
-                    console.error('Initialization Error:', error);
-                }
-            });
-    }
-
-    document.addEventListener('DOMContentLoaded', ()=> {
-            initWarrantyToggleBehavior();
-            loadGapiAndInitialize();
-        });
-
-    async function findMainInfo(maDonHang) {
-        try {
-            const response=await gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: SPREADSHEET_ID,
-                range: RANGE_MAIN,
-            });
-
-        const rows=response.result.values || [];
-        const row=rows.find(r=> (r[0] || '')===maDonHang);
-
-        if ( !row) {
-            updateContent(`Không tìm thấy dữ liệu bảo hành cho mã đơn hàng: <b>$ {
-                    escapeHtml(maDonHang)
-                }
-
-                </b>`);
-            return;
+        .infocol-3 {
+            width: 15%;
         }
 
-        warrantyMain= {
-            maDonHang: row[0] || '',
-            tenNguoiLienHe: row[1] || '',
-            diaChiChiTiet: row[2] || '',
-            sdtKhachHang: row[3] || '',
-            maHopDong: row[4] || '',
-            ngayBanGiao: row[5] || '',
+        .infocol-4 {
+            width: 23%;
         }
 
-        ;
-
-        const setText=(id, value)=> {
-            const el=document.getElementById(id);
-            if (el) el.textContent=value;
+        .borderedcol-1 {
+            width: 2.5%;
+            text-align: center;
         }
 
-        ;
-        const deliveryText=formatDateDisplay(warrantyMain.ngayBanGiao) || warrantyMain.ngayBanGiao || '';
-        setText('heroMaDonHang', warrantyMain.maDonHang);
-        setText('tenNguoiLienHe', warrantyMain.tenNguoiLienHe);
-        setText('diaChiChiTiet', warrantyMain.diaChiChiTiet);
-        setText('sdtKhachHang', warrantyMain.sdtKhachHang);
-        setText('heroMaHopDong', warrantyMain.maHopDong);
-        setText('maHopDong', warrantyMain.maHopDong);
-        setText('heroNgayBanGiao', deliveryText);
-        setText('ngayBanGiao', deliveryText);
-    }
-
-    catch (error) {
-        updateContent('Error fetching main data: ' + error.message);
-        console.error('Fetch Error:', error);
-    }
-}
-
-async function loadWarrantyRules() {
-    try {
-        const response=await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: RANGE_RULE,
-        });
-
-    const rows=response.result.values || [];
-
-    if ( !rows.length) {
-        warrantyRules=[];
-        return;
-    }
-
-    const headers=rows[0].map(normalizeKey);
-    warrantyRules=rows.slice(1).map(row=> rowToObject(headers, row));
-}
-
-catch (error) {
-    console.error('Error loading warranty rules:', error);
-    warrantyRules=[];
-}
-}
-
-function getApplicableRule(maSanPham, ngayBanGiao) {
-    const targetDate=normalizeDate(ngayBanGiao);
-    const productCode=String(maSanPham || '').trim();
-    if ( !targetDate || !productCode || !warrantyRules.length) return null;
-
-    const matched=warrantyRules .filter(rule=> String(getValue(rule, 'ma_san_pham', 'masanpham')).trim()===productCode) .map(rule=> ({
-            ...rule,
-            _applyDate: normalizeDate(getValue(rule, 'thoi_diem_ap_dung', 'thoi_diemap_dung'))
-        })) .filter(rule=> rule._applyDate && rule._applyDate < targetDate) .sort((a, b)=> b._applyDate - a._applyDate);
-
-return matched[0] || null;
-}
-
-function buildWarrantyMiniTable(rule, ngayBanGiao) {
-    if ( !rule) return '';
-
-    const deliveryDate=normalizeDate(ngayBanGiao);
-    const rowsHtml=[];
-
-    for (let index=1; index <=5; index++) {
-        const criterion=getValue(rule, `tieu_chi_bao_hanh_$ {
-                index
-            }
-
-            `, `tieu_chi_bao_hanh$ {
-                index
-            }
-
-            `, `tieu_chi_$ {
-                index
-            }
-
-            `);
-
-        const monthsRaw=getValue(rule, `time_$ {
-                index
-            }
-
-            `, `time$ {
-                index
-            }
-
-            `);
-        const monthsParsed=parseFloat(String(monthsRaw).replace(',', '.'));
-
-        if ( !criterion && (monthsRaw==='' || monthsRaw===null || monthsRaw===undefined)) {
-            continue;
+        .borderedcol-2-head {
+            width: 6.5%;
+            text-align: center;
         }
 
-        let expiryText='';
-        let remainingText='';
-
-        if (deliveryDate && !isNaN(monthsParsed)) {
-            const expiryDate=addMonths(deliveryDate, monthsParsed);
-            const remainingDays=daysBetween(new Date(), expiryDate);
-            expiryText=formatDateDisplay(expiryDate);
-
-            remainingText=remainingDays >=0 ? `Còn $ {
-                remainingDays
-            }
-
-            ngày` : `Quá hạn $ {
-                Math.abs(remainingDays)
-            }
-
-            ngày`;
+        .borderedcol-3-head {
+            width: 13%;
+            text-align: center;
         }
 
-        else {
-            expiryText='-';
-            remainingText='-';
+        .borderedcol-4-head {
+            width: 26%;
+            text-align: center;
         }
 
-        rowsHtml.push(` <tr> <td>$ {
-                criterion ? `<span class="warranty-criterion" >$ {
-                    escapeHtml(criterion)
-                }
+        .borderedcol-2 {
+            width: 6.5%;
+            text-align: left;
+        }
 
-                </span>` : '<span style="color:var(--muted);">—</span>'
+        .borderedcol-3 {
+            width: 13%;
+            text-align: left;
+        }
+
+        .borderedcol-4 {
+            width: 26%;
+            text-align: left;
+        }
+
+        .borderedcol-5 {
+            width: 7%;
+            text-align: center;
+        }
+
+        .borderedcol-6 {
+            width: 7%;
+            text-align: center;
+        }
+
+        .borderedcol-7 {
+            width: 6%;
+            text-align: center;
+        }
+
+        .borderedcol-8 {
+            width: 5%;
+            text-align: center;
+        }
+
+        .borderedcol-9 {
+            width: 4%;
+            text-align: center;
+        }
+
+        .borderedcol-10 {
+            width: 6%;
+            text-align: center;
+        }
+
+        .borderedcol-11-head {
+            width: 9%;
+            text-align: center;
+        }
+
+        .borderedcol-12-head {
+            width: 11%;
+            text-align: center;
+        }
+
+        .borderedcol-13-head {
+            width: 9%;
+            text-align: center;
+        }
+
+        .borderedcol-14-head {
+            width: 6%;
+            text-align: center;
+        }
+
+        .borderedcol-11 {
+            width: 9%;
+            text-align: right;
+        }
+
+        .borderedcol-12 {
+            width: 11%;
+            text-align: right;
+        }
+
+        .borderedcol-13 {
+            width: 14%;
+            text-align: center;
+        }
+
+        .borderedcol-14 {
+            width: 6%;
+            text-align: right;
+        }
+
+        .button-excel {
+            background-color: #0c9c07;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            width: 180px;
+            border-radius: 50px;
+            /* Bo tròn góc */
+            font-size: 16px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            z-index: 10;
+            /* Cố định ở dưới cùng */
+            left: 50%;
+            /* Căn giữa */
+            transform: translateX(-50%);
+            /* Căn giữa chính xác */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* Bóng mờ phía dưới */
+            transition: background-color 0.3s ease;
+            opacity: 0.9;
+            white-space: nowrap;
+            /* Ngăn nội dung xuống dòng */
+        }
+
+        .button-excel:hover {
+            background-color: #03580e;
+        }
+
+        .button-excel-pcy {
+            background-color: #0c9c07;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            width: 180px;
+            border-radius: 50px;
+            /* Bo tròn góc */
+            font-size: 16px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            z-index: 10;
+            /* Cố định ở dưới cùng */
+            left: 70%;
+            /* Căn giữa */
+            transform: translateX(-50%);
+            /* Căn giữa chính xác */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* Bóng mờ phía dưới */
+            transition: background-color 0.3s ease;
+            opacity: 0.9;
+            white-space: nowrap;
+            /* Ngăn nội dung xuống dòng */
+        }
+
+        .button-excel-pcy:hover {
+            background-color: #03580e;
+        }
+
+        .button-pdf {
+            background-color: #f30d0d;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            width: 180px;
+            border-radius: 50px;
+            /* Bo tròn góc */
+            font-size: 16px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            z-index: 10;
+            /* Cố định ở dưới cùng */
+            left: 30%;
+            /* Căn giữa */
+            transform: translateX(-50%);
+            /* Căn giữa chính xác */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* Bóng mờ phía dưới */
+            transition: background-color 0.3s ease;
+            opacity: 0.9;
+            white-space: nowrap;
+            /* Ngăn nội dung xuống dòng */
+        }
+
+        .button-pdf:hover {
+            background-color: #910707;
+        }
+
+
+        @media print {
+
+            body {
+                margin: 0;
+                padding: 0;
             }
 
-            </td> <td class="cell-center" ><span class="warranty-date" >$ {
-                escapeHtml(expiryText)
+            #content {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
             }
 
-            </span></td> <td class="cell-center" ><span class="warranty-remaining" >$ {
-                escapeHtml(remainingText)
+            .button-excel {
+                display: none;
             }
 
-            </span></td> </tr> `);
-    }
-
-    if ( !rowsHtml.length) {
-        return '';
-    }
-
-    const deliveryLabel=deliveryDate ? formatDateDisplay(deliveryDate) : '-';
-
-    return ` <div class="warranty-panel" > <div class="warranty-panel-head" > <div class="warranty-panel-title" >Thông tin bảo hành</div> </div> <table> <thead> <tr> <th>Tiêu chí</th> <th style="width: 20%;" class="cell-center" >Hạn BH</th> <th style="width: 20%;" class="cell-center" >Còn lại</th> </tr> </thead> <tbody> $ {
-        rowsHtml.join('')
-    }
-
-    </tbody> </table> </div> `;
-}
-
-async function findDetailInfo(maDonHang) {
-    try {
-        const response=await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: RANGE_DETAIL,
-        });
-
-    const rows=response.result.values || [];
-    const filteredRows=rows.filter(row=> (row[0] || '')===maDonHang);
-    warrantyItems=filteredRows.map(extractDetailDataFromRow);
-
-    if ( !filteredRows.length) {
-        const tableBody=document.getElementById('itemTableBody');
-        tableBody.innerHTML=`<tr><td colspan="8" class="cell-center" >Không có sản phẩm bảo hành</td></tr>`;
-        return;
-    }
-
-    displayDetailData(filteredRows);
-}
-
-catch (error) {
-    console.error('Error fetching detail data:', error);
-    updateContent('Error fetching detail data.');
-}
-}
-
-function extractDetailDataFromRow(row) {
-    const qtyRaw=row[5];
-    const qtyParsed=parseNumberFromSheet(qtyRaw);
-
-    return {
-        maDonHang: row[0] || '',
-        maSanPham: row[1] || '',
-        dienGiai: row[2] || '',
-        chieuRong: row[3] || '',
-        chieuCao: row[4] || '',
-        soLuong: formatNumberForDisplay(qtyParsed),
-        soLuongParsed: qtyParsed,
-        ngayBanGiao: row[6] || '',
-    }
-
-    ;
-}
-
-function displayDetailData(filteredRows) {
-    const tableBody=document.getElementById('itemTableBody');
-    let totalSoLuong=0;
-    let html='';
-
-    filteredRows.forEach((row, index)=> {
-            const item=extractDetailDataFromRow(row);
-            totalSoLuong +=parseFloat(item.soLuongParsed) || 0;
-
-            const effectiveDeliveryDate=item.ngayBanGiao || (warrantyMain ? warrantyMain.ngayBanGiao : '');
-            const rule=getApplicableRule(item.maSanPham, effectiveDeliveryDate);
-            const warrantyHtml=buildWarrantyMiniTable(rule, effectiveDeliveryDate);
-
-            const detailId=`warranty-detail-$ {
-                index
+            .button-excel-pcy {
+                display: none;
             }
 
-            `;
+            .button-pdf {
+                display: none;
+            }
+        }
 
-            html +=` <tr class="item-main-row" > <td class="cell-center" >$ {
-                index + 1
+        @media screen and (max-width: 768px) {
+            body {
+                font-family: 'Times New Roman', Times, serif;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                background: url('https://i.imgur.com/BrJoeOv.png') no-repeat center center;
+                background-size: 210mm auto;
+                opacity: 0.99;
             }
 
-            </td> <td><span class="product-code" >$ {
-                escapeHtml(item.maSanPham)
+            .content {
+                width: 100%;
+                max-width: 210mm;
+                margin: auto;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                position: relative;
+                z-index: 1;
             }
 
-            </span></td> <td><div class="product-desc" >$ {
-                escapeHtml(item.dienGiai)
+            h2 {
+                text-align: center;
+                font-size: 16px;
+                margin-bottom: 6px;
             }
 
-            </div></td> <td class="cell-center" >$ {
-                escapeHtml(item.chieuRong)
+            h3 {
+                text-align: center;
+                font-size: 12px;
+                margin-bottom: 6px;
             }
 
-            </td> <td class="cell-center" >$ {
-                escapeHtml(item.chieuCao)
+            p {
+                margin: 2px 0;
+                font-size: 8px;
             }
 
-            </td> <td class="cell-center" >$ {
-                escapeHtml(item.soLuong)
+            img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 0 auto 16px;
             }
 
-            </td> <td class="cell-center" >$ {
-                escapeHtml(formatDateDisplay(effectiveDeliveryDate) || effectiveDeliveryDate)
+            .info-table {
+                size: A4;
+                width: 100%;
+                max-width: 210mm;
+                border-collapse: collapse;
+                margin-top: 16px;
+                table-layout: fixed;
+                font-size: 8px;
             }
 
-            </td> <td class="cell-center" > $ {
-                warrantyHtml ? `<button type="button" class="warranty-toggle" data-target="${detailId}" aria-expanded="false" >Xem BH</button>` : '<span style="color:var(--muted);">—</span>'
+            .bordered-table {
+                size: A4;
+                width: 100%;
+                max-width: 210mm;
+                border-collapse: collapse;
+                margin-top: 16px;
+                table-layout: fixed;
+                font-size: 8px;
             }
 
-            </td> </tr> `;
-
-            if (warrantyHtml) {
-                html +=` <tr class="warranty-detail-row" id="${detailId}" hidden> <td colspan="8" class="warranty-detail-cell" > $ {
-                    warrantyHtml
-                }
-
-                </td> </tr> `;
+            .info-table th,
+            .info-table td,
+            .bordered-table th,
+            .bordered-table td {
+                border: 0.8px solid black;
+                padding: 3px;
+                word-wrap: break-word;
+                page-break-inside: avoid;
             }
-        });
 
-    const totalFormatted=formatNumberForDisplay(totalSoLuong);
+            .infocol-1 {
+                width: 15%;
+            }
 
-    html +=` <tr class="summary-row" > <td colspan="5" class="cell-right" >Tổng</td> <td class="cell-center" >$ {
-        escapeHtml(totalFormatted)
-    }
+            .infocol-2 {
+                width: 42%;
+            }
 
-    </td> <td></td> <td></td> </tr> `;
+            .infocol-3 {
+                width: 20%;
+            }
 
-    tableBody.innerHTML=html;
-}
+            .infocol-4 {
+                width: 23%;
+            }
 
-function initWarrantyToggleBehavior() {
-    const tableBody=document.getElementById('itemTableBody');
-    if ( !tableBody || tableBody.dataset.toggleBound==='1') return;
+            .borderedcol-1 {
+                width: 2.5%;
+                text-align: center;
+            }
 
-    tableBody.dataset.toggleBound='1';
+            .borderedcol-2-head {
+                width: 6.5%;
+                text-align: center;
+            }
 
-    tableBody.addEventListener('click', (event)=> {
-            const button=event.target.closest('.warranty-toggle');
-            if ( !button) return;
+            .borderedcol-3-head {
+                width: 13%;
+                text-align: center;
+            }
 
-            const targetId=button.getAttribute('data-target');
-            const row=document.getElementById(targetId);
-            if ( !row) return;
+            .borderedcol-4-head {
+                width: 26%;
+                text-align: center;
+            }
 
-            const willOpen=row.hidden;
-            row.hidden= !willOpen;
-            button.textContent=willOpen ? 'Ẩn BH' : 'Xem BH';
-            button.setAttribute('aria-expanded', String(willOpen));
-        });
-}
+            .borderedcol-2 {
+                width: 6.5%;
+                text-align: left;
+            }
 
-</script> </body>
+            .borderedcol-3 {
+                width: 13%;
+                text-align: left;
+            }
+
+            .borderedcol-4 {
+                width: 26%;
+                text-align: left;
+            }
+
+            .borderedcol-5 {
+                width: 7%;
+                text-align: center;
+            }
+
+            .borderedcol-6 {
+                width: 7%;
+                text-align: center;
+            }
+
+            .borderedcol-7 {
+                width: 6%;
+                text-align: center;
+            }
+
+            .borderedcol-8 {
+                width: 5%;
+                text-align: center;
+            }
+
+            .borderedcol-9 {
+                width: 4%;
+                text-align: center;
+            }
+
+            .borderedcol-10 {
+                width: 6%;
+                text-align: center;
+            }
+
+            .borderedcol-11-head {
+                width: 9%;
+                text-align: center;
+            }
+
+            .borderedcol-12-head {
+                width: 11%;
+                text-align: center;
+            }
+
+            .borderedcol-13-head {
+                width: 9%;
+                text-align: center;
+            }
+
+            .borderedcol-14-head {
+                width: 6%;
+                text-align: center;
+            }
+
+            .borderedcol-11 {
+                width: 9%;
+                text-align: right;
+            }
+
+            .borderedcol-12 {
+                width: 11%;
+                text-align: right;
+            }
+
+            .borderedcol-13 {
+                width: 14%;
+                text-align: center;
+            }
+
+            .borderedcol-14 {
+                width: 6%;
+                text-align: right;
+            }
+
+            .button-excel {
+                background-color: #0c9c07;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                width: 130px;
+                border-radius: 50px;
+                /* Bo tròn góc */
+                font-size: 16px;
+                cursor: pointer;
+                position: fixed;
+                bottom: 20px;
+                z-index: 10;
+                /* Cố định ở dưới cùng */
+                left: 50%;
+                /* Căn giữa */
+                transform: translateX(-50%);
+                /* Căn giữa chính xác */
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                /* Bóng mờ phía dưới */
+                transition: background-color 0.3s ease;
+                opacity: 0.9;
+                white-space: nowrap;
+                /* Ngăn nội dung xuống dòng */
+            }
+
+            .button-excel:hover {
+                background-color: #03580e;
+            }
+
+            .button-excel-pcy {
+                background-color: #0c9c07;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                width: 130px;
+                border-radius: 50px;
+                /* Bo tròn góc */
+                font-size: 16px;
+                cursor: pointer;
+                position: fixed;
+                bottom: 20px;
+                z-index: 10;
+                /* Cố định ở dưới cùng */
+                left: 80%;
+                /* Căn giữa */
+                transform: translateX(-50%);
+                /* Căn giữa chính xác */
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                /* Bóng mờ phía dưới */
+                transition: background-color 0.3s ease;
+                opacity: 0.9;
+                white-space: nowrap;
+                /* Ngăn nội dung xuống dòng */
+            }
+
+            .button-excel-pcy:hover {
+                background-color: #03580e;
+            }
+
+            .button-pdf {
+                background-color: #f30d0d;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                width: 130px;
+                border-radius: 50px;
+                /* Bo tròn góc */
+                font-size: 16px;
+                cursor: pointer;
+                position: fixed;
+                bottom: 20px;
+                z-index: 10;
+                /* Cố định ở dưới cùng */
+                left: 20%;
+                /* Căn giữa */
+                transform: translateX(-50%);
+                /* Căn giữa chính xác */
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                /* Bóng mờ phía dưới */
+                transition: background-color 0.3s ease;
+                opacity: 0.9;
+                white-space: nowrap;
+                /* Ngăn nội dung xuống dòng */
+            }
+
+            .button-pdf:hover {
+                background-color: #910707;
+            }
+        }
